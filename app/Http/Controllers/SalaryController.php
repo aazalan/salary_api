@@ -2,28 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
 use App\Models\Salary;
+use App\Services\SalaryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class SalaryController extends Controller
 {
+    /**
+     * выводит суммы зарплат
+     *
+     * @return JsonResponse
+     */
     public function showAll() : JsonResponse
     {
-        $salaries = [];
-        foreach(Employee::all() as  $employee) {
-            $salariesSum =  $employee->salaries->sum('work_hours'); 
-            if ($salariesSum !== 0) {
-                $salaries[$employee->id] = $salariesSum;
-            }
-        }
-        return response()->json($salaries);
+        return SalaryService::getAllSalaries();
     } 
 
+    /**
+     * погашает все транзакции
+     *
+     * @return Response
+     */
     public function cancelTransactions() : Response
     {
-        Salary::truncate();
-        return response('', 200);
+        return SalaryService::deleteAllTransactions();
     }
 }

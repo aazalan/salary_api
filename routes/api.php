@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SalaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/employee', []);
+Route::post('/employee', [EmployeeController::class, 'createEmployee']);
 
-Route::post('/employee/hours', []);
+Route::post('/employee/hours', [EmployeeController::class, 'createTransaction']);
 
-Route::get('/salaries', []);
+Route::get('/salaries', [SalaryController::class, 'showAll']);
 
-Route::delete('/salaries', []);
+Route::delete('/salaries', [SalaryController::class, 'cancelTransactions']);
+
+
